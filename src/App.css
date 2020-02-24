@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+.TodoEntryBlock{
+  width: 70%;
+  margin-right: 15%;
+  margin-left: 15%;
+}
+
+.CardBack{
+  background-color: aquamarine !important;
+  margin-bottom: 1%;
+}
