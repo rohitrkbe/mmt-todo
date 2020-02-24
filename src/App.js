@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { 
@@ -11,8 +11,26 @@ function App() {
   const [todoList, setNewTodoList]=useState([]);
   const [completeTodoList, setNewCompleteTodoList]=useState([]);
 
+  useEffect(()=>{
+    let dataTodoList = JSON.parse(localStorage.getItem('todoList'));
+    let dataCompletedTodoList = JSON.parse(localStorage.getItem('completeTodoList'));
+    if ( dataTodoList != null && dataTodoList.length > 0 ){
+      setNewTodoList(dataTodoList);
+    }
+    if ( dataCompletedTodoList != null && dataCompletedTodoList.length > 0 ){
+      setNewCompleteTodoList(dataCompletedTodoList);
+    }
+  },[])
+
+  useEffect(()=>{
+    localStorage.setItem('todoList', JSON.stringify(todoList) );
+  },[todoList])
+
+  useEffect(()=>{
+    localStorage.setItem('completeTodoList', JSON.stringify(completeTodoList) );
+  },[completeTodoList])
+
   const handleNewTodoEntry = ( event ) => {
-    console.log(event.target.value, 'entry')
     setNewTodo(event.target.value);
   }
 
@@ -80,14 +98,11 @@ function App() {
     }
     setNewTodoList([...tempTodoList]);
     setNewCompleteTodoList([...tempCompleteList]);
-    console.log('item', item);
   }
 
   const handleAllCompletedList = () => {
     setNewCompleteTodoList([]);
   }
-
-  console.log('completeTodoList', completeTodoList)
 
   return (
     <div className="App">
